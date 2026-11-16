@@ -7988,6 +7988,11 @@ if (isset($update["inline_query"])) {
     sendmessage($from_id, $texbot, $backadmin, 'HTML');
     step("gettokenbot", $from_id);
 } elseif ($user['step'] == "gettokenbot") {
+    // Only a real bot token may reach vpnbot/<bot>/config.php (same rule as api/users.php).
+    if (!preg_match('/^\d+:[A-Za-z0-9_-]{30,}$/', (string) $text)) {
+        sendmessage($from_id, $textbotlang['Admin']['agentbot']['invalidToken'], $backadmin, 'HTML');
+        return;
+    }
     $getInfoToken = json_decode(file_get_contents("https://api.telegram.org/bot$text/getme"), true);
     if ($getInfoToken == false or !$getInfoToken['ok']) {
         sendmessage($from_id, $textbotlang['Admin']['agentbot']['invalidToken'], $backadmin, 'HTML');
@@ -8020,7 +8025,7 @@ if (isset($update["inline_query"])) {
         error_log('Failed to copy default bot files into: ' . $dirsource);
     }
     $contentconfig = file_get_contents($dirsource . "/config.php");
-    $new_code = str_replace('BotTokenNew', $userdate['token'], $contentconfig);
+    $new_code = str_replace('BotTokenNew', preg_replace('/[^0-9A-Za-z:_-]/', '', (string) $userdate['token']), $contentconfig);
     file_put_contents($dirsource . "/config.php", $new_code);
     $agent_secret = bin2hex(random_bytes(24));
     setAgentWebhook($userdate['token'], $userdate['id_user'], $userdate['username'], $agent_secret);
