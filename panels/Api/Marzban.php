@@ -11,6 +11,9 @@ function token_panel($code_panel, $verify = true)
     if ($panel === null) {
         return null;
     }
+    if (function_exists('pengu_panel_row_allowed') && !pengu_panel_row_allowed($panel)) {
+        return array("error" => "Pengu Pro: this panel is not allowed on this bot");
+    }
 
     $url_get_token = $panel['url_panel'] . '/api/admin/token';
     $username_panel = $panel['username_panel'];

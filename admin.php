@@ -764,6 +764,10 @@ if ($datain == "paygwback") {
 } elseif ($text == $textbotlang['Admin']['btnKeyboard']['addPanel'] && $adminrulecheck['rule'] == "administrator") {
     sendmessage($from_id, $textbotlang['Admin']['managepanel']['Inbound']['getPanelType'], $keyboardtypepanel, 'HTML');
 } elseif (preg_match('/^typepanel#(.+)$/', $datain, $dataget) && $adminrulecheck['rule'] == "administrator") {
+    if (pengu_lock_active() && $dataget[1] !== "pasarguard") {
+        sendmessage($from_id, pengu_lock_text(), $backadmin, 'HTML');
+        return;
+    }
     if (!in_array($dataget[1], ["marzban", "marzneshin", "pasarguard", "mirza_agent", "x-ui_single", "Manualsale", "hiddify", "WGDashboard", "ibsng", "mikrotik", "rebecca", "nexora", "wg_mate"], true)) {
         return;
     }
@@ -801,6 +805,10 @@ if ($datain == "paygwback") {
         sendmessage($from_id, $textbotlang['Admin']['managepanel']['invalidDomain'], $backadmin, 'HTML');
         return;
     }
+    if (pengu_lock_active() && pengu_url_key($text) !== pengu_url_key($GLOBALS['pengu_panel_url'])) {
+        sendmessage($from_id, pengu_lock_text(), $backadmin, 'HTML');
+        return;
+    }
     savedata("save", "url_panel", $text);
     $paneltype = json_decode($user['Processing_value'], true)['type'];
     if ($paneltype == "hiddify") {
@@ -816,6 +824,10 @@ if ($datain == "paygwback") {
         step('add_username_panel', $from_id);
     }
 } elseif ($user['step'] == "add_username_panel") {
+    if (pengu_lock_active() && !in_array(trim((string) $text), array_map('strval', (array) ($GLOBALS['pengu_panel_users'] ?? [])), true)) {
+        sendmessage($from_id, pengu_lock_text(), $backadmin, 'HTML');
+        return;
+    }
     savedata("save", "username", trim($text));
     sendmessage($from_id, $textbotlang['Admin']['managepanel']['getPassword'], $backadmin, 'HTML');
     step('add_password_panel', $from_id);
@@ -2740,6 +2752,11 @@ elseif ($datain == "systemsms") {
         sendmessage($from_id, $textbotlang['Admin']['managepanel']['invalidDomain'], $backadmin, 'HTML');
         return;
     }
+    $penguRow = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
+    if (!pengu_panel_row_allowed(array_merge((array) $penguRow, ['url_panel' => $text]))) {
+        sendmessage($from_id, pengu_lock_text(), $backadmin, 'HTML');
+        return;
+    }
     $typepanel = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
     outtypepanel($typepanel['type'], $textbotlang['Admin']['managepanel']['changedUrlPanel']);
     update("marzban_panel", "url_panel", $text, "name_panel", $user['Processing_value']);
@@ -2837,6 +2854,11 @@ elseif ($datain == "systemsms") {
     sendmessage($from_id, $textbotlang['Admin']['managepanel']['getUsernameNew'], $backadmin, 'HTML');
     step('GetusernameNew', $from_id);
 } elseif ($user['step'] == "GetusernameNew") {
+    $penguRow = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
+    if (!pengu_panel_row_allowed(array_merge((array) $penguRow, ['username_panel' => trim((string) $text)]))) {
+        sendmessage($from_id, pengu_lock_text(), $backadmin, 'HTML');
+        return;
+    }
     $typepanel = select("marzban_panel", "*", "name_panel", $user['Processing_value'], "select");
     outtypepanel($typepanel['type'], $textbotlang['Admin']['managepanel']['changedUsernamePanel']);
     update("marzban_panel", "username_panel", $text, "name_panel", $user['Processing_value']);

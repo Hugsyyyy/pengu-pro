@@ -5,6 +5,79 @@ ini_set('error_log', 'error_log');
 
 const MIN_PHP_VERSION = PHP_VERSION_ID >= 80500 ? '8.5.12' : '8.4.27';
 
+// ---------------------------------------------------------------------------
+// Pengu Pro panel lock.
+// A hosted Pengu Pro bot may only connect to the PasarGuard panel(s) its owner
+// bought from the host, never to another panel or another panel type. The host
+// writes the allowed panel into config.php:
+//   $pengu_panel_url   = 'https://panel.example.com:8000';
+//   $pengu_panel_users = ['reseller_username', ...];
+// Without $pengu_panel_url (self-hosted use) nothing is restricted.
+// Enforced when a panel is added or edited (bot, API) and again before every
+// connection (token_panel, PanelRegistry), so a row written any other way
+// still cannot be used.
+// ---------------------------------------------------------------------------
+function pengu_lock_active(): bool
+{
+    return isset($GLOBALS['pengu_panel_url']) && is_string($GLOBALS['pengu_panel_url'])
+        && $GLOBALS['pengu_panel_url'] !== '';
+}
+
+function pengu_url_key($url): string
+{
+    $parts = parse_url(trim((string) $url));
+    if (!is_array($parts) || empty($parts['host']) || empty($parts['scheme'])) {
+        return '';
+    }
+    $scheme = strtolower($parts['scheme']);
+    $port = $parts['port'] ?? ($scheme === 'http' ? 80 : 443);
+    $path = rtrim($parts['path'] ?? '', '/');
+    if (isset($parts['user']) || isset($parts['pass']) || isset($parts['query']) || isset($parts['fragment'])) {
+        return '';
+    }
+    return $scheme . '://' . strtolower($parts['host']) . ':' . $port . $path;
+}
+
+function pengu_panel_allowed($type, $url, $username, $version = '1'): bool
+{
+    if (!pengu_lock_active()) {
+        return true;
+    }
+    $type = (string) $type;
+    if ($type === 'pasarguard') {
+        $version = '1';
+        $type = 'marzban';
+    }
+    if ($type !== 'marzban' || (string) $version !== '1') {
+        return false;
+    }
+    $want = pengu_url_key($GLOBALS['pengu_panel_url']);
+    if ($want === '' || pengu_url_key($url) !== $want) {
+        return false;
+    }
+    $users = $GLOBALS['pengu_panel_users'] ?? [];
+    return in_array((string) $username, array_map('strval', (array) $users), true);
+}
+
+function pengu_panel_row_allowed($row): bool
+{
+    if (!pengu_lock_active()) {
+        return true;
+    }
+    return is_array($row) && pengu_panel_allowed(
+        $row['type'] ?? '', $row['url_panel'] ?? '', $row['username_panel'] ?? '', $row['version_panel'] ?? '0'
+    );
+}
+
+function pengu_lock_text(): string
+{
+    $users = implode('، ', array_map(fn($u) => '<code>' . htmlspecialchars((string) $u) . '</code>', (array) ($GLOBALS['pengu_panel_users'] ?? [])));
+    return "⛔️ در Pengu Pro فقط پنلی وصل می‌شود که از ربات پنگو خریده‌اید.\n\n"
+        . "نوع پنل: <b>PasarGuard</b>\n"
+        . "آدرس: <code>" . htmlspecialchars((string) ($GLOBALS['pengu_panel_url'] ?? '')) . "</code>\n"
+        . "نام کاربری: " . $users;
+}
+
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -1672,6 +1745,11 @@ function finishAddPanel()
 {
     global $pdo, $from_id, $textbotlang, $keyboardadmin;
     $userdata = json_decode(select("user", "Processing_value", "id", $from_id, "select")['Processing_value'], true);
+    if (!pengu_panel_allowed($userdata['type'] ?? '', $userdata['url_panel'] ?? '', $userdata['username'] ?? '')) {
+        step("home", $from_id);
+        sendmessage($from_id, pengu_lock_text(), $keyboardadmin, 'HTML');
+        return;
+    }
     $defaultPrice = json_encode(['f' => "4000", 'n' => "4000", 'n2' => "4000"]);
     $defaultMain = json_encode(['f' => "1", 'n' => "1", 'n2' => "1"]);
     $defaultMax = json_encode(['f' => "1000", 'n' => "1000", 'n2' => "1000"]);

@@ -192,6 +192,10 @@ function panel_panel_add(array $data, string $method): void
             'customvolume' => $defaultAgentValue,
         ];
 
+        if (!pengu_panel_row_allowed($panelData)) {
+            sendJsonResponse(false, "Pengu Pro: only the PasarGuard panel bought from the host can be added", [], 403);
+        }
+
         $columns = implode(',', array_keys($panelData));
         $placeholders = ':' . implode(', :', array_keys($panelData));
 
@@ -277,6 +281,10 @@ function panel_panel_edit(array $data, string $method): void
         // Credential changes invalidate the cached panel session.
         if (isset($panelData['url_panel']) || isset($panelData['username_panel']) || isset($panelData['password_panel'])) {
             $panelData['datelogin'] = null;
+        }
+
+        if (!pengu_panel_row_allowed(array_merge($panel, $panelData))) {
+            sendJsonResponse(false, "Pengu Pro: only the PasarGuard panel bought from the host can be used", [], 403);
         }
 
         $setParts = [];

@@ -22,6 +22,9 @@ class PanelRegistry
     public static function driver($type, ManagePanel $manager)
     {
         $type = (string) $type;
+        if (function_exists('pengu_lock_active') && pengu_lock_active() && $type !== 'marzban') {
+            return null; // Pengu Pro: PasarGuard only
+        }
         if (!isset(self::$types[$type])) {
             return null;
         }

@@ -1151,7 +1151,11 @@ $keyboardtimereset = json_encode([
     ],
     'resize_keyboard' => true
 ]);
-$keyboardtypepanel = json_encode([
+$keyboardtypepanel = (function_exists('pengu_lock_active') && pengu_lock_active()) ? json_encode([
+    'inline_keyboard' => [
+        [['text' => $textbotlang['keyboard']['passargadPanel'], 'callback_data' => "typepanel#pasarguard"]],
+    ]
+]) : json_encode([
     'inline_keyboard' => [
         [
             ['text' => $textbotlang['keyboard']['marzban'], 'callback_data' => "typepanel#marzban"],
