@@ -680,6 +680,12 @@ if ($text == "/start" || $datain == "start" || $text == "start") {
 } elseif ($user['step'] == "getusernameinfo") {
     if (empty($text))
         return;
+    // A panel username only: this value lands in Processing_value, which the
+    // confirm handlers read back as the JSON state of a purchase.
+    if (!preg_match('/^[A-Za-z0-9_.@-]{2,64}$/', (string) $text)) {
+        sendmessage($from_id, $textbotlang['common']['invalidInput'], $backuser, 'html');
+        return;
+    }
     $usernameconfig = $text;
     update("user", "Processing_value", $usernameconfig, "id", $from_id);
     sendmessage($from_id, $textbotlang['textbot']['selectLocation'], $list_marzban_panel_user, 'html');
@@ -1812,6 +1818,20 @@ if ($text == "/start" || $datain == "start" || $text == "start") {
             sendmessage($from_id, $textbotlang['users']['extend']['error'], null, 'HTML');
             return;
         }
+        // 0 means unlimited / never expiring on the panel; the panel's own min/max
+        // for custom services apply to a renewal just as to a new purchase.
+        $limitAgent = $user['agent'];
+        $minVolume = intval(json_decode((string) $marzban_list_get['mainvolume'], true)[$limitAgent] ?? 1);
+        $maxVolume = intval(json_decode((string) $marzban_list_get['maxvolume'], true)[$limitAgent] ?? 0);
+        $minTime = intval(json_decode((string) $marzban_list_get['maintime'], true)[$limitAgent] ?? 1);
+        $maxTime = intval(json_decode((string) $marzban_list_get['maxtime'], true)[$limitAgent] ?? 0);
+        $askedVolume = intval($userdata['data_limit']);
+        $askedTime = intval($userdata['time']);
+        if ($askedVolume < max(1, $minVolume) || $askedTime < max(1, $minTime)
+            || ($maxVolume > 0 && $askedVolume > $maxVolume) || ($maxTime > 0 && $askedTime > $maxTime)) {
+            sendmessage($from_id, $textbotlang['users']['extend']['error'], null, 'HTML');
+            return;
+        }
         $prodcut['code_product'] = "custom_volume";
         $prodcut['name_product'] = $nameloc['name_product'];
         $prodcut['price_product'] = ($userdata['data_limit'] * $custompricevalue) + ($userdata['time'] * $customtimevalueprice);
@@ -2533,6 +2553,11 @@ if ($text == "/start" || $datain == "start" || $text == "start") {
     Editmessagetext($from_id, $message_id, $textdisorder, $keyboarddisorder);
     step("getdesdisorder", $from_id);
 } elseif ($user['step'] == "getdesdisorder") {
+    // Free text must never become purchase state (Processing_value is JSON-decoded elsewhere).
+    if (is_array(json_decode((string) $text, true))) {
+        sendmessage($from_id, $textbotlang['common']['invalidInput'], null, 'html');
+        return;
+    }
     update("user", "Processing_value", $text, "id", $from_id);
     $nameloc = select("invoice", "*", "id_invoice", $user['Processing_value'], "select");
     $DataUserOut = $ManagePanel->DataUser($nameloc['Service_location'], $nameloc['username']);
@@ -6125,6 +6150,11 @@ if ($text == "/start" || $datain == "start" || $text == "start") {
 } elseif ($datain == "confirmaextras") {
     $userdata = json_decode((string) $user['Processing_value'], true);
     if (empty($userdata['username']) || empty($userdata['volume'])) {
+        return;
+    }
+    // 0 GB costs nothing and is sent to the panel as data_limit 0 = UNLIMITED.
+    if (!ctype_digit((string) $userdata['volume']) || intval($userdata['volume']) < 1) {
+        sendmessage($from_id, $textbotlang['users']['status']['error'], null, 'html');
         return;
     }
     $marzban_list_get = select("marzban_panel", "*", "code_panel", $userdata['code_panel'] ?? '', "select");
