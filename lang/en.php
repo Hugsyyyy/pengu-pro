@@ -2417,7 +2417,7 @@ Current amount: %s',
                         'aboutBot' => '💎 | Version Bot: %s
 📌 | Version Mini App: 0.1.1
 
-<blockquote>🔹 | Pengu Pro is built on Pengu Pro Bot (open source, AGPL-3.0: github.com/Hugsyyyy/mirza_pro)</blockquote>
+<blockquote>🔹 | Pengu Pro — source code (AGPL): github.com/Hugsyyyy/mirza_pro</blockquote>
 
 <blockquote>🔹 | Any sale or charging of money for this bot is considered a violation.</blockquote>
 

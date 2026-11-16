@@ -2414,7 +2414,7 @@ f,n.n2',
                         'aboutBot' => '💎 | Version Bot: %s
 📌 | Version Mini App: 0.1.1
 
-<blockquote>🔹 | Pengu Pro بر پایهٔ Mirza Bot ساخته شده است (متن‌باز، AGPL-3.0: github.com/Hugsyyyy/mirza_pro)</blockquote>
+<blockquote>🔹 | Pengu Pro — کد منبع (AGPL): github.com/Hugsyyyy/mirza_pro</blockquote>
 
 <blockquote>🔹 | هرگونه فروش یا دریافت وجه بابت این ربات تخلف محسوب می‌شود.</blockquote>
 

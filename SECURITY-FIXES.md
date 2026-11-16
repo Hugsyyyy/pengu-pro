@@ -23,6 +23,6 @@ request.php.
 
 ## Pengu Pro changes
 
-- **Name:** the bot, web panel and mini app are called Pengu Pro; the about text credits Mirza Bot and links this source (AGPL-3.0).
+- **Name:** the bot, web panel and mini app are called Pengu Pro; the about text links this source (AGPL-3.0 section 13); copyright notices stay in LICENSE and the code.
 - **Panel lock:** with `$pengu_panel_url` / `$pengu_panel_users` in `config.php` (written by the host), the bot connects only to that PasarGuard panel and those usernames: other panel types, addresses and usernames are refused when added or edited (bot and API), and again before every connection (`token_panel`, `PanelRegistry`).
 - **No donation popup** after web panel login.
