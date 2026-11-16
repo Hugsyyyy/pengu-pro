@@ -14,7 +14,8 @@
 </div>
 
 <script src="js/app.js"></script>
-<?php if (!empty($_SESSION['show_donate'])):
+<?php // Pengu Pro: the upstream donation popup is not shown to resellers
+if (false && !empty($_SESSION['show_donate'])):
   unset($_SESSION['show_donate']); ?>
 <div class="modal-veil" id="donateModal">
   <div class="modal" style="width:min(420px,100%)">
