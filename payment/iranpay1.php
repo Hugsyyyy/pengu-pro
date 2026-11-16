@@ -28,6 +28,14 @@ if (!is_array($Payment_reports) || $Payment_reports['Payment_Method'] !== "Curre
 if ($Payment_reports['payment_Status'] == "expire") {
     exit('order expired');
 }
+// The authority must be the one issued for THIS order (stored when the
+// invoice was created); otherwise one cheap payment could be replayed
+// against the hashid of a more expensive order.
+if (!is_string($authority) || $authority === ''
+    || !hash_equals((string) $Payment_reports['dec_not_confirmed'], $authority)) {
+    http_response_code(403);
+    exit('authority mismatch');
+}
 $invoice_id = $Payment_reports['id_order'];
 $price = $Payment_reports['price'];
 // verify Transaction
