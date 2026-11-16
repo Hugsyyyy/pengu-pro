@@ -1819,7 +1819,7 @@ trojan://xyz',
                         'on' => 'روشن گردید',
                         'intro' => '📌 از لیست زیر میتوانید درگاه ها را مدیریت کنید.
 
-⚠️ تیم میرزا هیچ تضمینی برای درگاه ها نخواهد داشت و استفاده  و تمامی مسئولیت ها به عهده شما می باشد',
+⚠️ تیم Pengu Pro هیچ تضمینی برای درگاه ها نخواهد داشت و استفاده  و تمامی مسئولیت ها به عهده شما می باشد',
                         'askPlisioApi' => '⚙️ لطفاً API Key درگاه Plisio را ارسال نمایید.
 
 🔑 برای دریافت کلید API به سایت زیر مراجعه کنید:
@@ -2414,13 +2414,13 @@ f,n.n2',
                         'aboutBot' => '💎 | Version Bot: %s
 📌 | Version Mini App: 0.1.1
 
-<blockquote>🔹 | این ربات کاملاً رایگان است و توسط تیم میرزا توسعه داده شده است</blockquote>
+<blockquote>🔹 | Pengu Pro بر پایهٔ Mirza Bot ساخته شده است (متن‌باز، AGPL-3.0: github.com/Hugsyyyy/mirza_pro)</blockquote>
 
 <blockquote>🔹 | هرگونه فروش یا دریافت وجه بابت این ربات تخلف محسوب می‌شود.</blockquote>
 
 <blockquote>🔹 | در صورت مشاهدهٔ فروش یا دریافت وجه، لطفاً وجه خود را پیگیری کرده و بازپس‌گیری نمایید.</blockquote>
 
-<blockquote>🐞 | برای گزارش مشکل، در <a href="https://t.me/mirzapanel?direct">دایرکت کانال میرزا</a> پیام بدهید.</blockquote>',
+<blockquote>🐞 | برای گزارش مشکل به پشتیبانی پنگو پیام بدهید.</blockquote>',
                         'gatewayRow' => '
 📌 نام درگاه : <code>%s</code>
  - تعداد پرداخت موفق : <code>%s</code>
@@ -4330,10 +4330,10 @@ f,n.n2',
                 'jsSidebarCollapsed' => 'منو جمع‌شده فعال شد',
                 'jsSidebarExpanded' => 'منو باز فعال شد',
                 'jsThemeActivated' => 'تم «{name}» فعال شد',
-                'keyboardManageTitle' => 'پنل مدیریت ربات میرزا',
+                'keyboardManageTitle' => 'پنل مدیریت ربات Pengu Pro',
                 'keyboardSaveBtn' => 'بازگشت به حالت پیشفرض',
                 'keyboardSortHint' => 'بازگشت به پنل کاربری',
-                'layoutBrandName' => 'پنل مدیریت میرزا بات',
+                'layoutBrandName' => 'پنل مدیریت Pengu Pro',
                 'layoutDefaultAdminName' => 'ادمین',
                 'layoutFooterCopyright' => 'داشبورد',
                 'layoutFooterLinkDocs' => 'تنظیمات',
@@ -4350,7 +4350,7 @@ f,n.n2',
                 'layoutNavLogout' => 'مدیریت',
                 'layoutNavOrders' => 'بله، ادامه',
                 'layoutNavPayments' => '· پنل',
-                'layoutNavProducts' => 'میرزا',
+                'layoutNavProducts' => 'Pengu Pro',
                 'layoutNavServices' => 'انصراف',
                 'layoutNavSettings' => 'داشبورد',
                 'layoutNavUsers' => 'آیا اطمینان دارید؟ این عملیات قابل بازگشت نیست.',
@@ -4363,7 +4363,7 @@ f,n.n2',
                 'layoutPageTitleProduct' => 'محصولات',
                 'layoutPageTitleService' => 'سرویس‌ها',
                 'layoutPageTitleSettings' => 'تنظیمات',
-                'layoutPageTitleSuffix' => 'میرزا',
+                'layoutPageTitleSuffix' => 'Pengu Pro',
                 'layoutPageTitleUsers' => 'کاربران',
                 'layoutProfileMenuLabel' => 'تنظیمات',
                 'layoutSearchBoxPlaceholder' => 'تراکنش‌ها',
@@ -4373,11 +4373,11 @@ f,n.n2',
                 'loginEnterCredentials' => 'نام کاربری و رمز عبور را وارد کنید.',
                 'loginErrorTitle' => 'رمز عبور',
                 'loginFooter' => 'نام کاربری',
-                'loginHeading' => 'پنل مدیریت میرزا',
+                'loginHeading' => 'پنل مدیریت Pengu Pro',
                 'loginHidePassword' => 'دسترسی به این پنل فقط برای مدیران مجاز است.',
-                'loginPanelTitle' => 'ورود — پنل مدیریت میرزا',
-                'loginPasswordLabel' => 'پنل مدیریت میرزا',
-                'loginPasswordPlaceholder' => '· نسخه 1.0 میرزا',
+                'loginPanelTitle' => 'ورود — پنل مدیریت Pengu Pro',
+                'loginPasswordLabel' => 'پنل مدیریت Pengu Pro',
+                'loginPasswordPlaceholder' => '· نسخه 1.0 Pengu Pro',
                 'loginRememberMe' => 'برای مدیریت ربات، اطلاعات حساب خود را وارد کنید.',
                 'loginShowPassword' => 'ورود به پنل',
                 'loginSubtitle' => 'برای حمایت لطفا به',
@@ -4547,10 +4547,10 @@ f,n.n2',
                 'settingsPasswordStrengthLabel' => 'تغییر رمز',
                 'settingsPhpMemory' => 'حافظه PHP',
                 'settingsReportIssue' => 'گزارش مشکل',
-                'settingsReportIssueLink' => 'دایرکت کانال میرزا',
+                'settingsReportIssueLink' => 'دایرکت کانال Pengu Pro',
                 'settingsDonate' => 'حمایت مالی',
                 'settingsDonateLink' => 'دونیت',
-                'donatePopupTitle' => '💖 حمایت از میرزا',
+                'donatePopupTitle' => '💖 حمایت از Pengu Pro',
                 'donatePopupText' => 'این ربات و پنل به‌صورت رایگان توسعه داده می‌شوند. اگر از آن راضی هستید، با یک دونیت کوچک به ادامه توسعه و پشتیبانی کمک کنید.',
                 'donatePopupLater' => 'بعداً',
                 'settingsSaveBtn' => 'رمز فعلی',
