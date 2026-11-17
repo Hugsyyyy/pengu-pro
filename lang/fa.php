@@ -2416,10 +2416,6 @@ f,n.n2',
 
 <blockquote>🔹 | Pengu Pro — کد منبع (AGPL): github.com/Hugsyyyy/pengu-pro</blockquote>
 
-<blockquote>🔹 | هرگونه فروش یا دریافت وجه بابت این ربات تخلف محسوب می‌شود.</blockquote>
-
-<blockquote>🔹 | در صورت مشاهدهٔ فروش یا دریافت وجه، لطفاً وجه خود را پیگیری کرده و بازپس‌گیری نمایید.</blockquote>
-
 <blockquote>🐞 | برای گزارش مشکل به پشتیبانی پنگو پیام بدهید.</blockquote>',
                         'gatewayRow' => '
 📌 نام درگاه : <code>%s</code>

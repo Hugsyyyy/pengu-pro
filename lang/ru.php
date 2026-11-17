@@ -2417,13 +2417,9 @@ f,n.n2',
                         'aboutBot' => '💎 | Version Bot: %s
 📌 | Version Mini App: 0.1.1
 
-<blockquote>🔹 | Этот бот полностью бесплатный и разработан командой Pengu Pro</blockquote>
+<blockquote>🔹 | Pengu Pro — source code (AGPL): github.com/Hugsyyyy/pengu-pro</blockquote>
 
-<blockquote>🔹 | Любая продажа или взимание платы за этого бота считается нарушением.</blockquote>
-
-<blockquote>🔹 | Если вы заметили продажу или взимание платы, пожалуйста, отследите и верните свои деньги.</blockquote>
-
-<blockquote>🐞 | Чтобы сообщить о проблеме, напишите в <a href="https://t.me/mirzapanel?direct">директ канала Pengu Pro</a>.</blockquote>',
+<blockquote>🐞 | To report a problem, message Pengu support.</blockquote>',
                         'gatewayRow' => '
 📌 Название шлюза: <code>%s</code>
  - Количество успешных платежей: <code>%s</code>

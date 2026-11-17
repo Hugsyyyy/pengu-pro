@@ -2417,13 +2417,9 @@ f,n.n2',
                         'aboutBot' => '💎 | Version Bot: %s
 📌 | Version Mini App: 0.1.1
 
-<blockquote>🔹 | 此机器人完全免费，由 Pengu Pro 团队开发</blockquote>
+<blockquote>🔹 | Pengu Pro — source code (AGPL): github.com/Hugsyyyy/pengu-pro</blockquote>
 
-<blockquote>🔹 | 任何对此机器人的出售或收费均视为违规。</blockquote>
-
-<blockquote>🔹 | 如果您发现任何出售或收费行为，请追踪并追回您的款项。</blockquote>
-
-<blockquote>🐞 | 如需报告问题，请在 <a href="https://t.me/mirzapanel?direct">Pengu Pro 频道私信</a> 中留言。</blockquote>',
+<blockquote>🐞 | To report a problem, message Pengu support.</blockquote>',
                         'gatewayRow' => '
 📌 网关名称：<code>%s</code>
  - 成功支付次数：<code>%s</code>

@@ -16,7 +16,7 @@ if (!is_array($data) || !isset($data['hashid'], $data['authority'], $data['statu
     exit('invalid request');
 }
 $hashid = $data['hashid'];
-$authority = $data['authority'];
+$authority = is_scalar($data['authority']) ? (string) $data['authority'] : '';
 $StatusPayment = $data['status'];
 $setting = config_all('setting');
 $PaySetting = config_get('pay', "marchent_floypay");

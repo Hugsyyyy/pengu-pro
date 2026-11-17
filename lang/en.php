@@ -2419,10 +2419,6 @@ Current amount: %s',
 
 <blockquote>🔹 | Pengu Pro — source code (AGPL): github.com/Hugsyyyy/pengu-pro</blockquote>
 
-<blockquote>🔹 | Any sale or charging of money for this bot is considered a violation.</blockquote>
-
-<blockquote>🔹 | If you see any sale or charging of money, please track and reclaim your money.</blockquote>
-
 <blockquote>🐞 | To report a problem, message Pengu support.</blockquote>',
                         'gatewayRow' => '
 📌 Gateway name: <code>%s</code>

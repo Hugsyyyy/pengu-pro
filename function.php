@@ -1745,7 +1745,8 @@ function finishAddPanel()
 {
     global $pdo, $from_id, $textbotlang, $keyboardadmin;
     $userdata = json_decode(select("user", "Processing_value", "id", $from_id, "select")['Processing_value'], true);
-    if (!pengu_panel_allowed($userdata['type'] ?? '', $userdata['url_panel'] ?? '', $userdata['username'] ?? '')) {
+    if (!pengu_panel_allowed($userdata['type'] ?? '', $userdata['url_panel'] ?? '', $userdata['username'] ?? '',
+        ($userdata['type'] ?? '') === 'pasarguard' ? '1' : '0')) {
         step("home", $from_id);
         sendmessage($from_id, pengu_lock_text(), $keyboardadmin, 'HTML');
         return;

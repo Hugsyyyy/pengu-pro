@@ -192,6 +192,10 @@ function panel_panel_add(array $data, string $method): void
             'customvolume' => $defaultAgentValue,
         ];
 
+        if (($panelData['type'] ?? '') === 'pasarguard') {
+            $panelData['type'] = 'marzban';
+            $panelData['version_panel'] = '1';
+        }
         if (!pengu_panel_row_allowed($panelData)) {
             sendJsonResponse(false, "Pengu Pro: only the PasarGuard panel bought from the host can be added", [], 403);
         }
