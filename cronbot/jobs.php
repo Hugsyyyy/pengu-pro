@@ -1,6 +1,30 @@
 <?php
 
+/**
+ * Pengu Pro: how often the bot sends its backup to the report group is set by
+ * the host (mirzactl writes pengu.json next to config.php). 0 means never.
+ * Without the file it stays upstream's every 5 hours.
+ */
+function pengu_backup_schedule(): ?string
+{
+    $conf = json_decode((string) @file_get_contents(dirname(__DIR__) . '/pengu.json'), true);
+    $hours = is_array($conf) && isset($conf['backup_hours']) ? (int) $conf['backup_hours'] : 5;
+    if ($hours <= 0) {
+        return null;
+    }
+    if ($hours >= 24) {
+        return '0 0 * * *';
+    }
+
+    return '0 */' . $hours . ' * * *';
+}
+
 function mirza_cron_jobs(): array
+{
+    return array_values(array_filter(pengu_cron_job_list(), static fn(array $job): bool => $job['schedule'] !== null));
+}
+
+function pengu_cron_job_list(): array
 {
     return [
         ['job' => 'croncard', 'schedule' => '*/1 * * * *', 'title' => 'تأیید خودکار رسید کارت به کارت'],
@@ -20,7 +44,7 @@ function mirza_cron_jobs(): array
         ['job' => 'uptime_node', 'schedule' => '*/15 * * * *', 'title' => 'پایش وضعیت نودها'],
         ['job' => 'uptime_panel', 'schedule' => '*/15 * * * *', 'title' => 'پایش وضعیت پنل‌ها'],
         ['job' => 'expireagent', 'schedule' => '*/30 * * * *', 'title' => 'انقضای اشتراک نمایندگان'],
-        ['job' => 'backupbot', 'schedule' => '0 */5 * * *', 'title' => 'پشتیبان‌گیری ربات‌ساز'],
+        ['job' => 'backupbot', 'schedule' => pengu_backup_schedule(), 'title' => 'پشتیبان‌گیری ربات‌ساز'],
         ['job' => 'lottery', 'schedule' => '*/1 * * * *', 'title' => 'قرعه‌کشی و امتیازات'],
     ];
 }
